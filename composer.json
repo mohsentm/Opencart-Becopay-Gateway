@@ -1,0 +1,34 @@
+{
+  "name": "becoapy/OpenCart-Becopay-Gateway",
+  "description": "becopay opencart payment gateway",
+  "keywords": [
+    "payment","gateway","payment gateway",
+    "becopay","opencart",
+    "third party gateway module",
+    "gateway module",
+    "third party gateway"
+  ],
+  "homepage": "https://becopay.com/en/io",
+  "version" : "1.0.0",
+  "config": {
+    "vendor-dir": "upload/system/library/becopay"
+  },
+  "sections" : {
+    "description" : "becopay opencart payment gateway"
+  },
+  "support": {
+    "issues": "https://github.com/becopay/OpenCart-Becopay-Gateway/issues"
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "becopay/invoice_sdk_php": "^1.0"
+  },
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "becopat team",
+      "email": "io@becopay.com"
+    }
+  ],
+  "minimum-stability": "dev"
+}

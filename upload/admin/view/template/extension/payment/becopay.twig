@@ -1,0 +1,310 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit"
+                        title="{{ button_save }}"
+                        class="btn btn-primary"
+                        form="form-payment"
+                        data-toggle="tooltip">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{{ cancel }}"
+                   title="{{ button_cancel }}"
+                   class="btn btn-default"
+                   data-toggle="tooltip">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+
+            <h1>{{ heading_title }}</h1>
+
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li>
+                        <a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible">
+                <i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">
+                    &times;
+                </button>
+            </div>
+        {% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i> {{ text_config }}
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <form action="{{ action }}"
+                      method="post"
+                      enctype="multipart/form-data"
+                      id="form-payment"
+                      class="form-horizontal">
+                    <ul class="nav nav-tabs" id="tabs">
+                        <li class="active">
+                            <a href="#tab-account" data-toggle="tab">{{ tab_account }}</a>
+                        </li>
+                        <li>
+                            <a href="#tab-payment" data-toggle="tab">{{ tab_payment }}</a>
+                        </li>
+                        <li>
+                            <a href="#tab-order-status" data-toggle="tab">{{ tab_order_status }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                    <div class="tab-pane active" id="tab-account">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-status">
+                                {{ label_status }}
+                            </label>
+                            <div class="col-sm-10">
+                                <select name="payment_becopay_status"
+                                        id="input-status"
+                                        class="form-control">
+                                    {% if payment_becopay_status %}
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                    {% else %}
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="entry-mobile">
+                            <span data-toggle="tooltip" title="{{ help_mobile }}">
+                            {{ label_mobile }}
+                            </span>
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="tel"
+                                       name="payment_becopay_mobile"
+                                       id="entry-mobile"
+                                       class="form-control"
+                                       required
+                                       value="{{ payment_becopay_mobile }}"
+                                       placeholder="{{ entry_mobile }}"/>
+
+                                {% if error_mobile %}
+                                    <div class="text-danger">{{ error_mobile }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group required ">
+                            <label class="col-sm-2 control-label" for="entry-api-url">
+                            <span data-toggle="tooltip" title="{{ help_api_url }}">
+                            {{ label_api_url }}
+                            </span>
+                            </label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                                    <input type="url"
+                                           name="payment_becopay_api_base_url"
+                                           id="entry-api-url"
+                                           class="form-control"
+                                           required
+                                           value="{{ payment_becopay_api_base_url }}"
+                                           placeholder="{{ entry_api_url }}"/>
+                                </div>
+                                {% if error_api_url %}
+                                    <div class="text-danger">{{ error_api_url }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="entry-api-key">
+                            <span data-toggle="tooltip" title="{{ help_api_key }}">
+                            {{ label_api_key }}
+                            </span>
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       name="payment_becopay_api_key"
+                                       id="entry-api-key"
+                                       class="form-control"
+                                       required
+                                       value="{{ payment_becopay_api_key }}"
+                                       placeholder="{{ entry_api_key }}"/>
+                                {% if error_api_key %}
+                                    <div class="text-danger">{{ error_api_key }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-sort-order">
+                                {{ label_sort_order }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       name="payment_becopay_sort_order"
+                                       id="input-sort-order"
+                                       class="form-control"
+                                       value="{{ payment_becopay_sort_order }}"
+                                       placeholder="{{ entry_sort_order }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="entry-callback">
+                            <span data-toggle="tooltip" title="{{ help_callback }}">
+                            {{ label_callback }}
+                            </span>
+                            </label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                                    <input type="url"
+                                           id="entry-callback"
+                                           class="form-control"
+                                           readonly
+                                           value="{{ callback }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-payment">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-total" >
+                                    <span data-toggle="tooltip" title="{{ help_total }}">
+                                        {{ label_total }}
+                                    </span>
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       name="payment_becopay_total"
+                                       id="input-total"
+                                       class="form-control"
+                                       value="{{ payment_becopay_total }}"
+                                       placeholder="{{ entry_total }}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="label-title">
+                                {{ label_title }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       name="payment_becopay_title"
+                                       id="entry-title"
+                                       class="form-control"
+                                       value="{{ payment_becopay_title }}"
+                                       placeholder="{{ entry_title }}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="entry-description">
+                                {{ label_description }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       name="payment_becopay_description"
+                                       id="entry-description"
+                                       class="form-control"
+                                       value="{{ payment_becopay_description }}"
+                                       placeholder="{{ entry_description }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-geo-zone">
+                                {{ label_geo_zone }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <select name="payment_becopay_geo_zone_id"
+                                        id="input-geo-zone"
+                                        class="form-control">
+                                    <option value="">{{ text_all_zones }}</option>
+
+                                    {% for geo_zone in geo_zones %}
+                                        {% if geo_zone.geo_zone_id ==  payment_becopay_geo_zone_id %}
+                                            <option value="{{ geo_zone.geo_zone_id }}" selected="selected">
+                                                {{ geo_zone.name }}
+                                            </option>
+                                        {% else %}
+                                            <option value="{{ geo_zone.geo_zone_id }}">
+                                                {{ geo_zone.name }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-order-status">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-order-status">
+                                {{ label_order_status }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <select name="payment_becopay_paid_status_id"
+                                        id="input-order-status"
+                                        class="form-control">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == payment_becopay_paid_status_id %}
+                                            <option value="{{ order_status.order_status_id }}" selected="selected">
+                                                {{ order_status.name }}
+                                            </option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">
+                                                {{ order_status.name }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-canceled-order-status">
+                                {{ label_canceled_status }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <select name="payment_becopay_pending_status_id"
+                                        id="input-canceled-order-status"
+                                        class="form-control">
+                                    {% for order_status in order_statuses %}
+                                        {% if order_status.order_status_id == payment_becopay_pending_status_id %}
+                                            <option value="{{ order_status.order_status_id }}" selected="selected">
+                                                {{ order_status.name }}
+                                            </option>
+                                        {% else %}
+                                            <option value="{{ order_status.order_status_id }}">
+                                                {{ order_status.name }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}

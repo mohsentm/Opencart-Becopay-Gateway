@@ -1,0 +1,13 @@
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin: 0 !important;
+    border: 1px solid #ededed;
+    border-top: none !important;
+}
+
+.form-group:first-child {
+    padding-top: 25px;
+}
