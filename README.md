@@ -3,7 +3,7 @@ Becopay payment gateway for Opencart
 
 Version: 1.0.0
 
-Tags: online payment, payment, payment gateway,international payments, billing system, payment institution, becopay
+Tags: online payment, payment, payment gateway, becopay
 
 Requires at least: 3.0.0
 
