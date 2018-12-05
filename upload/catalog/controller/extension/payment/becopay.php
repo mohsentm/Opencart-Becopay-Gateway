@@ -57,6 +57,16 @@ class ControllerExtensionPaymentBecopay extends Controller
     const CONFIG_PAID_STATUS = 'payment_becopay_paid_status_id';
 
     /**
+     * Becopay merchant currency config name
+     */
+    const CONFIG_MERCHANT_CURRENCY = 'payment_becopay_merchant_currency';
+
+    /**
+     * Becopay merchant currency config name
+     */
+    const DEFAULT_MERCHANT_CURRENCY = 'IRR';
+
+    /**
      * Display errors setter
      */
     const DISPLAY_ERROR = 'display_errors';
@@ -146,7 +156,6 @@ class ControllerExtensionPaymentBecopay extends Controller
         $orderID = $this->session->data['order_id'];
         $order = $this->model_checkout_order->getOrder($orderID);
 
-
         if (!isset($_SERVER['HTTPS'])) {
             $_SERVER['HTTPS'] = false;
         }
@@ -154,6 +163,13 @@ class ControllerExtensionPaymentBecopay extends Controller
         $mobile = $this->config->get($this::CONFIG_BECOPAY_MOBILE);
         $apiBaseUrl = $this->config->get($this::CONFIG_BECOPAY_API_BASE_URL);
         $apiKey = $this->config->get($this::CONFIG_BECOPAY_API_KEY);
+        $merchantCurrency = $this->config->get($this::CONFIG_MERCHANT_CURRENCY) ?: $this::DEFAULT_MERCHANT_CURRENCY;
+
+        $description = array(
+            'orderId:' . $order['order_id'],
+            'amount:' . $this->getAmountInCents($order['total'], $order['currency_code']) . ' ' . $order['currency_code'],
+            'customer email:' . $order['email']
+        );
 
         try {
             $gateway = new PaymentGateway(
@@ -165,14 +181,26 @@ class ControllerExtensionPaymentBecopay extends Controller
             $invoice = $gateway->create(
                 $order['order_id'],
                 $this->getAmountInCents($order['total'], $order['currency_code']),
-                'customer email:' . $order['email']
+                implode($description, ', '),
+                $order['currency_code'],
+                $merchantCurrency
             );
             if ($invoice) {
+
+                //validate the invoice response
+                if (
+                    $order['currency_code'] != $invoice->payerCur ||
+                    $this->getAmountInCents($order['total'], $order['currency_code']) != $invoice->payerAmount ||
+                    $merchantCurrency != $invoice->merchantCur
+                )
+                    exit($this->language->get('invoice_invalid_response'));
+
 
                 $this->model_checkout_order->addOrderHistory(
                     $orderID,
                     $this->config->get($this::CONFIG_PENDING_STATUS),
-                    $this->language->get('order_history_create') . $invoice->id
+                    $this->language->get('order_history_create') . '"' . $invoice->id . '", ' .
+                    $this->language->get('order_merchant_receive') . '"' . $invoice->merchantAmount . ' ' . $invoice->merchantCur . '"'
                 );
 
                 $this->response->redirect($invoice->gatewayUrl);
@@ -228,9 +256,9 @@ class ControllerExtensionPaymentBecopay extends Controller
                 if ($invoice->status == 'success') {
 
                     $price = $this->getAmountInCents($order['total'], $order['currency_code']);
-                    if ($invoice->price != $price) {
+                    if ($invoice->payerAmount != $price) {
                         throw new Exception(
-                            'Wrong pay amount: ' . $invoice->price
+                            'Wrong pay amount: ' . $invoice->payerAmount
                             . ', expected: ' . $price
                         );
                     }
@@ -238,7 +266,10 @@ class ControllerExtensionPaymentBecopay extends Controller
                     $paidOrder = $this->config->get($this::CONFIG_PAID_STATUS);
 
                     $this->load->language($this::BECOPAY_EXTENSION);
-                    $this->model_checkout_order->addOrderHistory($orderId, $paidOrder,$this->language->get('order_history_create') . $invoice->id,true);
+                    $this->model_checkout_order->addOrderHistory($orderId, $paidOrder,
+                        $this->language->get('order_history_paid') . $invoice->id . '", ' .
+                        $this->language->get('order_merchant_receive') . '"' . $invoice->merchantAmount . ' ' . $invoice->merchantCur . '"',
+                        true);
 
                     $this->response->redirect($this->url->link('checkout/success', $this::EMPTY_CODE, true));
 
@@ -265,13 +296,13 @@ class ControllerExtensionPaymentBecopay extends Controller
 
     /**
      * @param double $total
-     * @param string $currency
+     * @param string $currency currency code
      *
      * @return int
      */
     private function getAmountInCents($total, $currency)
     {
-        return intval(round($total * $this->getRate($currency)));
+        return round($total * $this->getRate($currency), 2);
     }
 
 }

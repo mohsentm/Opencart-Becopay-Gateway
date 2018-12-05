@@ -12,6 +12,7 @@ $_['entry_total'] = 'حداقل مبلغ سفارس';
 $_['entry_title'] = 'درگاه بکوپی';
 $_['entry_description'] = 'پرداخت با بکوپی: با رمزارز به صرفه بپردازید';
 $_['entry_sort_order'] = 'ترتیب مرتب سازی درگاه پرداخت';
+$_['entry_merchant_currency'] = 'IRR';
 
 $_['label_status'] = 'وضعیت:';
 $_['label_mobile'] = 'شماره موبایل:';
@@ -25,6 +26,7 @@ $_['label_description'] = 'توضیحات:';
 $_['label_geo_zone'] = 'منطقه جغرافیایی:';
 $_['label_canceled_status'] = 'وضعیت سفارش در حال انتظار:';
 $_['label_order_status'] = 'وضعیت سفارش پراخت شده:';
+$_['label_merchant_currency'] = 'واحد پول پذیرنده';
 
 $_['text_config'] = 'پیکربندی بکوپی';
 $_['text_enabled'] = 'فعال';
@@ -37,7 +39,7 @@ $_['help_api_url'] = 'آدرس API سرویس بکوپی را این قسمت و
 $_['help_api_key'] = 'شناسه API خود را این قسمت وارد کنید';
 $_['help_total'] = 'حداقل مبلغ کلی سفارش که باید باشد که این درگاه نمایش داده شود';
 $_['help_callback'] = 'آدرس بازگشت درگاه شما';
-
+$_['help_merchant_currency'] = 'واحد پول دریافتی پذیرنده. مثال IRR, USD, EUR';
 
 $_['error_warning'] = 'خظا: شما دسترسی برای تغییر پیکربندی بکوپی را ندارید!';
 $_['error_mobile'] = 'شماره موبایل اجباری می باشد!';

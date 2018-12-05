@@ -12,6 +12,7 @@ $_['entry_total'] = 'Min. order amount';
 $_['entry_title'] = 'Becopay payment';
 $_['entry_description'] = 'Pay via becopay: pay economically with cryptocurrency';
 $_['entry_sort_order'] = 'Payment gateway ordering id';
+$_['entry_merchant_currency'] = 'IRR';
 
 $_['label_status'] = 'Status:';
 $_['label_mobile'] = 'Mobile Number:';
@@ -25,6 +26,7 @@ $_['label_description'] = 'Description:';
 $_['label_geo_zone'] = 'Geo Zone:';
 $_['label_canceled_status'] = 'Pending order Status:';
 $_['label_order_status'] = 'Paid order status:';
+$_['label_merchant_currency'] = 'Merchant Currency';
 
 $_['text_config'] = 'Becopay configuration';
 $_['text_enabled'] = 'Enabled';
@@ -37,6 +39,7 @@ $_['help_api_url'] = 'Enter Becopay api base url here';
 $_['help_api_key'] = 'Enter your Becopay Api Key here';
 $_['help_total'] = 'The checkout total the order must reach before this payment method becomes active.';
 $_['help_callback'] = 'Your callback url';
+$_['help_merchant_currency'] = 'Merchant receive currency. e.g. IRR, USD, EUR';
 
 
 $_['error_warning'] = 'Warning: You do not have permission to modify payment Becopay!';

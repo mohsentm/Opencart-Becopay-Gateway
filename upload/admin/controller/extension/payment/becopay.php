@@ -131,6 +131,7 @@ class ControllerExtensionPaymentBecopay extends Controller
         'payment_becopay_sort_order',
         'payment_becopay_total',
         'payment_becopay_title',
+        'payment_becopay_merchant_currency',
         'payment_becopay_description',
         'payment_becopay_geo_zone_id',
         'payment_becopay_paid_status_id',
