@@ -25,10 +25,11 @@ You must have a Becopay merchant account to use this plugin.  It's free and easy
 **Installation by FTP**
 
 1. Download Becopay plugin zip.
-2. Log in to your admin panel.
-3. In the left navigation bar, go to ``Extensions > Installer.``
-4. Uploading the Becopay plugin
-5. After the upload finished on the left navigation bar, go to ``Extensions > Extensions.``
+2. Connect to server and go to __Opencart base directory__.
+3. Open __upload directory__ inside downloaded archive.
+4. Extract files and directories to base directory.
+4. Log in to your admin panel.
+5. On the left navigation bar, go to ``Extensions > Extensions.``
 6. find the `becopay payment gateway` then click on install button 
 
 
